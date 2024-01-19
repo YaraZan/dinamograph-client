@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark {
+  color-scheme: dark;
+}
+
+/*
+   FONTS
+
+   These are fonts used by 2r component library
+*/
+
+
+/* Mohave */
+@font-face {
+  font-family: 'Mohave';
+  src: url('@assets/fonts/mohave/Mohave-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mohave';
+  src: url('@assets/fonts/mohave/Mohave-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mohave';
+  src: url('@assets/fonts/mohave/Mohave-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mohave';
+  src: url('@assets/fonts/mohave/Mohave-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/mohave/Mohave-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+
+
+/* Raleway */
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/raleway/Raleway-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/raleway/Raleway-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/raleway/Raleway-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/raleway/Raleway-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('@assets/fonts/raleway/Raleway-Black.ttf');
+  font-weight: 800;
+  font-style: normal;
+}
