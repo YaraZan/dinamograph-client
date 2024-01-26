@@ -24,7 +24,8 @@ import PasswordInput from "@components/ui/input/PasswordInput.vue";
 
         <div class="flex items-center gap-[20px] mt-[40px]">
           <span class="text-[14px] font-medium text-gray-7 dark:text-gray-5">Есть аккаунт?</span>
-          <router-link to="/login" class="text-[14px] font-medium text-primary hover:text-purple-2" >Войдите</router-link>
+          <router-link to="/login" class="text-[14px] font-medium text-primary hover:text-purple-2 focus:outline-primary"
+          >Войдите</router-link>
         </div>
 
       </div>

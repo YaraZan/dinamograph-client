@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-<a :href="href" class="font-normal text-[24px] uppercase tracking-[-1%]
+<a :href="href" class="font-medium text-[16px] uppercase tracking-[-1%]
           text-gray-7 dark:text-white hover:text-primary dark:hover:text-primary cursor-pointer">
   {{ text }}
 </a>

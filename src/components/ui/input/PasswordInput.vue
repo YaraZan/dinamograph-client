@@ -38,12 +38,13 @@ const showPassord = ref(false)
         :placeholder="placeholder"
         class="w-full bg-white dark:bg-gray-7 border border-gray-5 dark:border-gray-6 rounded-[10px]
         focus:ring-0 focus:ring-offset-0 outline-none dark:focus:border-primary dark:focus:bg-primary
-        dark:focus:bg-opacity-5 hover:border-primary dark:hover:bg-opacity-60 focus:border-primary focus:bg-primary
+        dark:focus:bg-opacity-5 hover:bg-gray-11 dark:hover:bg-opacity-60 focus:border-primary focus:bg-primary
         focus:bg-opacity-5 placeholder-gray-4 dark:placeholder-gray-6 text-gray-7 dark:text-white font-semibold"
         :class="[inputSize, customStyles]">
 
-    <div @click="showPassord = !showPassord"  class="absolute right-[5px] bottom-[5px] flex p-[8px] items-center justify-center rounded-[10px]
-                    hover:bg-gray-10 dark:hover:bg-gray-8 cursor-pointer">
+    <div @click="showPassord = !showPassord"
+         class="absolute right-[5px] bottom-[5px] flex p-[8px] items-center justify-center rounded-[10px]
+          hover:bg-gray-10 dark:hover:bg-gray-8 cursor-pointer">
       <EyeClosed v-if="showPassord" />
       <Eye v-else />
     </div>
