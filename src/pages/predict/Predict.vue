@@ -45,17 +45,27 @@ const handleSelectImage = (file) => {
 
 <template>
   <authorized-layout>
-  <div class="w-2/3 mx-auto flex flex-col justify-between min-h-screen pb-[20px]">
+  <div class="w-2/3 mx-auto flex flex-col justify-between min-h-screen pb-[50px]">
     <div class="w-full self-center mt-[400px]">
-      <div class="relative">
-        <Logo class="absolute top-[10px] left-[-50px]" size="sm"/>
-        <span v-if="predictionText" class="text-5xl text-gray-9 font-bold">{{predictionText}}</span>
-        <span v-else-if="processing" class="text-5xl text-gray-9 font-bold">...</span>
-        <span v-else class="text-5xl text-gray-9 font-bold">Выберите изображение ниже для анализа</span>
+
+
+      <div class="flex items-start gap-[20px]">
+        <div class="flex p-4 items-center justify-center rounded-[20px] bg-white shadow-lg">
+          <Logo size="md" />
+        </div>
+        <span v-if="predictionText"
+              class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
+        >{{predictionText}}</span>
+        <span v-else-if="processing"
+              class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
+        >...</span>
+        <span v-else class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
+        >Выберите изображение ниже для анализа</span>
       </div>
+
     </div>
 
-    <div class="flex w-full items-center justify-between">
+    <div class="flex w-full items-center justify-between rounded-2xl border border-gray-300 p-4">
       <FileSelect @select-image="handleSelectImage" />
       <PrimaryButton @click="predictByImage" custom-styles="" text="Отправить" />
     </div>

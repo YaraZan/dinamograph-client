@@ -13,11 +13,12 @@ const props = defineProps({
   customStyles: {
     type: String,
     default: ""
-  }
+  },
 })
 
 const buttonSize = computed(() => {
   return {
+    xs: 'px-[12px] py-[4px]',
     sm: 'px-[20px] py-[8px]',
     md: 'px-[40px] py-[16px]',
     'custom': props.customStyles,
@@ -27,12 +28,16 @@ const buttonSize = computed(() => {
 
 <template>
   <button
-      class="font-raleway font-bold border border-purple-1 cursor-pointer outline-none
-      rounded-[10px] text-white shadow hover:bg-purple-2 focus:bg-purple-2 active:bg-purple-2
-      bg-primary text-[16px] dark:hover:bg-opacity-60 dark:focus:border-primary dark:active:bg-opacity-1"
+      class="border border-purple-1 cursor-pointer outline-none
+      rounded-[10px] shadow hover:bg-purple-2 focus:bg-purple-2 active:bg-purple-2
+      bg-primary dark:hover:bg-opacity-60 dark:focus:border-primary dark:active:bg-opacity-1"
       :class="[buttonSize, customStyles]">
     <slot name="prefix" />
-    {{ text }}
+
+    <span class="font-raleway font-bold text-white text-[16px]" v-if="!$slots.spinner">{{ text }}</span>
+
     <slot name="suffix" />
+
+    <slot name="spinner" />
   </button>
 </template>

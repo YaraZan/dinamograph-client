@@ -15,7 +15,7 @@ import {Logo} from "@components/ui/index.js";
         <Logo size="sm" />
         <h2 class="text-primary dark:text-white font-normal text-[32px]">Dinamograph</h2>
       </div>
-      <h1 class="text-gray-7 dark:text-white font-bold text-[72px]">Analyze. Detect. Fix.</h1>
+      <h1 class="text-gray-7 dark:text-white font-bold text-[72px]">Some hero title</h1>
     </div>
 
   </div>

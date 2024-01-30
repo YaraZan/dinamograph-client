@@ -5,6 +5,21 @@ export default {
   content: ["./src/**/*.{html,js,vue}"],
   theme: {
       extend: {
+          keyframes: {
+              typing: {
+                  "0%": {
+                      width: "0%",
+                      visibility: "hidden"
+                  },
+                  "100%": {
+                      width: "100%"
+                  }
+              }
+          },
+          animation: {
+              typing: "typing 2s steps(200) alternate",
+              typingInfinite: "typing 2s steps(80) infinite alternate"
+          },
           fontFamily: {
               'mohave': ['Mohave'],
               'raleway': ['Raleway'],
@@ -26,7 +41,6 @@ export default {
               'gray-7': '#303030',
               'gray-8': '#2C2C2C',
               'gray-9': '#242424',
-              'gray-50': '#1A1A1A',
               'purple-1': '#A763FF',
               'purple-2': '#5B00D2',
           },

@@ -1,4 +1,5 @@
 import { EncryptStorage } from 'encrypt-storage';
-export const encryptStorage = new EncryptStorage(import.meta.env.SECRET_STORAGE, {
-    prefix: '@storage',
-});
+
+const SECRET = import.meta.env.VITE_SECRET_STORAGE
+
+export const encryptStorage = new EncryptStorage(SECRET);
