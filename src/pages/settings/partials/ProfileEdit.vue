@@ -1,5 +1,5 @@
 <script setup>
-import {Input} from "@components/ui/index.js";
+import {Input, PrimaryButton, SecondaryButton} from "@components/ui/index.js";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {encryptStorage} from "@/utils/storage.js";
@@ -38,6 +38,12 @@ const getUserDetails = () => {
   })
 }
 
+const logout = () => {
+  encryptStorage.removeItem('token')
+
+  router.push('/')
+}
+
 onMounted(() => {
   getUserDetails()
 })
@@ -47,11 +53,14 @@ onMounted(() => {
   <div v-if="!processing" class="flex w-full flex-col gap-[40px]">
 
     <div class="flex flex-col gap-[5px]">
-      <h2 class="font-semibold text-[48px] text-gray-800">Профиль</h2>
+      <div class="flex items-center gap-[20px]">
+        <h2 class="font-semibold text-[48px] text-gray-800 dark:text-white">Профиль</h2>
+        <SecondaryButton @click="logout" size="xs" text="Выйти" />
+      </div>
       <span class="font-normal text-[16px] text-gray-400">Данные аккаунта и пароль</span>
     </div>
 
-    <div class="flex flex-col gap-[15px] max-w-[400px]">
+    <div v-if="emailInput && nameInput" class="flex flex-col gap-[15px] max-w-[400px]">
       <div class="flex w-full items-center justify-between">
         <span class="font-normal text-[16px] text-gray-400">Имя</span>
         <Input :is-disabled="true" v-model="nameInput" size="md" placeholder="Имя"></Input>
@@ -62,7 +71,9 @@ onMounted(() => {
       </div>
     </div>
 
+    <span v-else class="text-gray-400 font-semibold text-[16px] italic">Не удаётся загрузить данные</span>
+
   </div>
 
-  <ProfileEditSkeleton v-else/>
+  <ProfileEditSkeleton v-else />
 </template>

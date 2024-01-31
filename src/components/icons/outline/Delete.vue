@@ -27,7 +27,7 @@ const iconSize = computed(() => {
 </script>
 
 <template>
-  <svg :class="[customSize, iconSize]" class="cursor-pointer stroke-gray-400 hover:stroke-gray-600 dark:stroke-gray-200" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg :class="[customSize, iconSize]" class="cursor-pointer stroke-gray-300 hover:stroke-red-400 dark:stroke-stone-600 dark:hover:stroke-red-400" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M2.74406 4.57731V17.078C2.74406 18.7619 4.10911 20.1269 5.793 20.1269H14.4511C16.1349 20.1269 17.5 18.7619 17.5 17.078V4.57731M0 3.66274H20M7.01251 1.83325H13.3333M7.01251 16.4166V9.40402M13.3333 16.4166V9.40402" stroke-width="1.82937"/>
   </svg>
 </template>

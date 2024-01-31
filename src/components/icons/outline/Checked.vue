@@ -27,6 +27,12 @@ const iconSize = computed(() => {
 </script>
 
 <template>
-  <svg :class="[customSize, iconSize]" class="fill-gray-400 dark:fill-stone-600" xmlns="http://www.w3.org/2000/svg" ><path fill-rule="evenodd" d="M19.518 15.13a7.404 7.404 0 0 1-2.689.503c-4.242 0-7.681-3.576-7.681-7.988 0-1.313.304-2.552.844-3.645C7.076 5.134 5 8.057 5 11.485c0 4.412 3.439 7.989 7.681 7.989 2.98 0 5.564-1.765 6.837-4.344Z" clip-rule="evenodd"/></svg>
+  <svg :class="[customSize, iconSize]"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 12.6475L9.4333 17.8336C9.50583 17.9185 9.6386 17.9132 9.70422 17.8229L18.295 6" stroke-width="1.72662" stroke-linecap="round"/>
+  </svg>
 </template>
+
+
+
+
 

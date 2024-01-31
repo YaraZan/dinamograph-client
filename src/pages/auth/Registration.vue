@@ -34,10 +34,6 @@ const register = () => {
     },
   })
       .then(response => {
-        const res = response.data
-
-        encryptStorage.setItem('token', res.token)
-
         router.push('/predict')
       })
       .catch(e => {

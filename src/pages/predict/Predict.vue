@@ -2,13 +2,16 @@
 import {FileSelect, Input, Logo, PrimaryButton, SecondaryButton} from "@components/ui/index.js";
 import AuthorizedLayout from "@/layouts/AuthorizedLayout.vue";
 import axios from 'axios';
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {encryptStorage} from "@/utils/storage.js";
 
 const API_KEY = import.meta.env.VITE_API_KEY
 const DINAMOGRAPH_API_URL = import.meta.env.VITE_DINAMOGRAPH_API_URL
+const token = encryptStorage.getItem('token')
 
 const predictionText = ref('');
 const selectedImage = ref(null);
+const aiModels = ref([]);
 const processing = ref(false);
 
 const predictByImage = () => {
@@ -36,10 +39,33 @@ const predictByImage = () => {
   })
 }
 
+const getAllAiModels = () => {
+  processing.value = true
+
+  axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/all`, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${API_KEY}`
+    },
+  })
+      .then(response => {
+        aiModels.value = response.data.models;
+      })
+      .catch(error => {
+        processing.value = false;
+      })
+      .finally(() => {
+        processing.value = false;
+      })
+}
+
 const handleSelectImage = (file) => {
   selectedImage.value = file;
 };
 
+onMounted(() => {
+  getAllAiModels()
+})
 
 </script>
 
@@ -50,24 +76,24 @@ const handleSelectImage = (file) => {
 
 
       <div class="flex items-start gap-[20px]">
-        <div class="flex p-4 items-center justify-center rounded-[20px] bg-white shadow-lg">
+        <div class="flex p-4 items-center justify-center rounded-[20px] bg-white dark:shadow-stone-700 dark:bg-stone-800 shadow">
           <Logo size="md" />
         </div>
-        <span v-if="predictionText"
-              class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
-        >{{predictionText}}</span>
-        <span v-else-if="processing"
-              class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
-        >...</span>
-        <span v-else class="text-[32px] pt-4 overflow-hidden text-gray-9 font-semibold"
-        >Выберите изображение ниже для анализа</span>
+        <code v-if="predictionText"
+              class="text-[32px] pt-4 overflow-hidden text-gray-800 dark:text-white"
+        >{{predictionText}}</code>
+        <code v-else-if="processing"
+              class="text-[32px] pt-4 overflow-hidden text-gray-800 dark:text-white"
+        >...</code>
+        <code v-else class="text-[32px] pt-4 overflow-hidden text-gray-800 dark:text-white"
+        >Выберите изображение ниже для анализа</code>
       </div>
 
     </div>
 
-    <div class="flex w-full items-center justify-between rounded-2xl border border-gray-300 p-4">
+    <div class="flex w-full items-center justify-between rounded-2xl border border-gray-300 dark:border-stone-600 py-2 px-4">
       <FileSelect @select-image="handleSelectImage" />
-      <PrimaryButton @click="predictByImage" custom-styles="" text="Отправить" />
+      <PrimaryButton @click="predictByImage" size="sm" text="Отправить" />
     </div>
 
   </div>

@@ -24,8 +24,8 @@ const copyToClipboard = () => {
 <template>
 <div @click="copyToClipboard" class="relative flex flex-col items-center justify-center">
   <Copy custom-size="w-[20px] h-[20px]"/>
-  <div v-if="showTooltip" class="absolute bottom-[150%] flex items-center justify-center p-[5px] bg-gray-800 border border-gray-700 rounded-[5px]">
-    <span class="font-normal text-[14px] text-white">Скопировано!</span>
+  <div v-if="showTooltip" class="absolute bottom-[150%] flex items-center justify-center p-[5px] bg-stone-900 border border-stone-700 rounded-[5px]">
+    <span class="font-semibold text-[14px] text-white">Скопировано!</span>
   </div>
 </div>
 </template>

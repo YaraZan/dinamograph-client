@@ -12,18 +12,18 @@ const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  <aside class="font-raleway fixed w-[72px] min-h-screen border-r border-gray-12">
+  <aside class="font-raleway fixed w-[72px] bg-white dark:bg-stone-800 min-h-screen border-r border-gray-300 dark:border-gray-600">
     <div class="flex flex-col w-full px-[10px] py-[20px] gap-[10px] items-center">
       <Logo3D size="sm" class="mb-[20px]" />
 
       <MainNavLink to="predict">
-        <Magic :custom-size="$route.name === 'predict' ? 'stroke-primary' : 'stroke-gray-400 dark:stroke-gray-400'" size="sm"/>
+        <Magic :custom-size="$route.name === 'predict' ? 'stroke-primary' : 'stroke-gray-300 dark:stroke-stone-600'" size="sm"/>
       </MainNavLink>
       <MainNavLink to="settings">
-        <Settings :custom-size="$route.name === 'settings' ? 'stroke-primary' : 'stroke-gray-400 dark:stroke-gray-400'" size="sm"/>
+        <Settings :custom-size="$route.name === 'settings' ? 'stroke-primary' : 'stroke-gray-300 dark:stroke-stone-600'" size="sm"/>
       </MainNavLink>
       <MainNavLink to="config">
-        <Config :custom-size="$route.name === 'config' ? 'stroke-primary' : 'stroke-gray-400 dark:stroke-gray-400'" size="sm"/>
+        <Config :custom-size="$route.name === 'config' ? 'fill-primary' : 'fill-gray-300 dark:fill-stone-600'" size="sm"/>
       </MainNavLink>
     </div>
   </aside>

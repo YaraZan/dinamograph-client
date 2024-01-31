@@ -14,13 +14,19 @@ const props = defineProps({
     type: String,
     default: ""
   },
+  isDisabled: {
+    type: Boolean,
+    default: false
+  },
 })
 
 const buttonSize = computed(() => {
   return {
-    xs: 'px-[12px] py-[4px]',
-    sm: 'px-[20px] py-[8px]',
-    md: 'px-[40px] py-[16px]',
+    xs: 'w-[80px]',
+    sm: 'w-[100px]',
+    md: 'w-[150px]',
+    lg: 'w-[200px]',
+    xl: 'w-[250px]',
     'custom': props.customStyles,
   }[props.size.toString()]
 })
@@ -28,9 +34,11 @@ const buttonSize = computed(() => {
 
 <template>
   <button
-      class="border border-purple-1 cursor-pointer outline-none
+      class="px-[12px] py-[4px] border border-purple-1 cursor-pointer outline-none
       rounded-[10px] shadow hover:bg-purple-2 focus:bg-purple-2 active:bg-purple-2
-      bg-primary dark:hover:bg-opacity-60 dark:focus:border-primary dark:active:bg-opacity-1"
+      bg-primary dark:hover:bg-opacity-60 dark:focus:border-primary dark:active:bg-opacity-1
+      disabled:opacity-50 flex items-center justify-center"
+      :disabled="isDisabled"
       :class="[buttonSize, customStyles]">
     <slot name="prefix" />
 

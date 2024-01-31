@@ -6,9 +6,6 @@ import Moon from "@icons/filled/Moon.vue";
 
 import { useDark, useToggle } from '@vueuse/core';
 import Sun from "@icons/filled/Sun.vue";
-
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 </script>
 
 <template>
@@ -21,12 +18,6 @@ const toggleDark = useToggle(isDark);
     </div>
 
     <div class="flex items-center gap-[30px]">
-      <div @click="toggleDark()"
-           class="flex p-[8px] items-center justify-center rounded-[10px]
-           hover:bg-gray-10 dark:hover:bg-gray-8 cursor-pointer">
-        <Sun v-if="isDark"/>
-        <Moon v-else />
-      </div>
       <!-- <SecondaryButton text="Главная"/> -->
       <div class="flex items-center gap-[50px]">
         <router-link to="/login"><HeaderLink text="login"/></router-link>

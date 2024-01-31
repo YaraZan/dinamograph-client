@@ -56,9 +56,9 @@ defineEmits(['update:modelValue']);
         @input="$emit('update:modelValue', $event.target.value)"
         :type="type"
         :placeholder="placeholder"
-        class="bg-white dark:bg-gray-7 border border-gray-5 dark:border-gray-6 rounded-[10px]
+        class="bg-white dark:bg-stone-800 border border-gray-300 dark:border-stone-600 rounded-[10px]
         focus:ring-0 focus:ring-offset-0 outline-none dark:focus:border-primary dark:focus:bg-primary
-        dark:focus:bg-opacity-5 hover:bg-gray-11 dark:hover:bg-opacity-60 focus:border-primary focus:bg-primary
+        dark:focus:bg-opacity-5 hover:bg-gray-50 dark:hover:bg-opacity-5 focus:border-primary focus:bg-primary
         focus:bg-opacity-5 placeholder-gray-4 dark:placeholder-gray-6 text-gray-7 dark:text-white font-semibold
         disabled:bg-gray-100 disabled:text-gray-400"
         :class="[inputSize, customStyles, isError ? 'border-red-500 dark:bg-red-500 dark:bg-opacity-5 bg-red-500 bg-opacity-5':'']">

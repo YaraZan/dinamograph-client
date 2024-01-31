@@ -43,7 +43,7 @@ const handleFileChange = (event) => {
         type="file"
         @change="handleFileChange"
         :placeholder="placeholder"
-        class="block w-full text-sm text-slate-500
+        class="block w-full text-sm text-gray-400
         file:mr-4 file:py-2 file:px-4 file:rounded-md
         file:border-0 file:text-sm file:font-semibold
         file:bg-purple-100 file:text-purple-2
