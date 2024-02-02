@@ -7,7 +7,7 @@ import {encryptStorage} from "@/utils/storage.js";
 
 const API_KEY = import.meta.env.VITE_API_KEY
 const DINAMOGRAPH_API_URL = import.meta.env.VITE_DINAMOGRAPH_API_URL
-const token = encryptStorage.getItem('token')
+const token = encryptStorage.getItem('at')
 
 const predictionText = ref('');
 const selectedImage = ref(null);
@@ -44,19 +44,19 @@ const getAllAiModels = () => {
 
   axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/all`, {
     headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${API_KEY}`
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
   })
-      .then(response => {
-        aiModels.value = response.data.models;
-      })
-      .catch(error => {
-        processing.value = false;
-      })
-      .finally(() => {
-        processing.value = false;
-      })
+  .then(response => {
+    aiModels.value = response.data.models;
+  })
+  .catch(error => {
+    processing.value = false;
+  })
+  .finally(() => {
+    processing.value = false;
+  })
 }
 
 const handleSelectImage = (file) => {

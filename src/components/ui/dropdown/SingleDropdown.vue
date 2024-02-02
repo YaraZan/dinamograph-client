@@ -46,7 +46,7 @@ const preventClose = (e) => {
       :text="text">
 
       <template #suffix>
-        <ArrowBottom />
+        <ArrowBottom :class="{ 'rotate-[180deg]' : open }" />
       </template>
     </SecondaryButton>
     <Transition
@@ -59,7 +59,7 @@ const preventClose = (e) => {
     >
       <div v-show="open" @click="preventClose"
            class="absolute top-[110%] gap-[5px] w-full flex flex-col p-[5px] border
-           border-gray-300 dark:border-stone-600 rounded-[10px]">
+           border-gray-300 dark:border-stone-600 rounded-[10px] bg-white dark:bg-stone-800">
         <slot name="content"/>
       </div>
     </Transition>

@@ -29,9 +29,8 @@ const login = () => {
     },
   })
   .then(response => {
-    const res = response.data
-
-    encryptStorage.setItem('token', res.token)
+    encryptStorage.setItem('at', response.data.at)
+    encryptStorage.setItem('ud', response.data.ud)
 
     router.push('/predict')
   })
@@ -53,7 +52,7 @@ const login = () => {
 
         <Logo size="lg" />
 
-        <div class="flex flex-col gap-[40px] mt-[20px] w-[350px]">
+        <div class="flex flex-col gap-[35px] mt-[20px] w-[350px]">
           <h2 class="text-[32px] font-semibold self-center">Вход в аккаунт</h2>
             <div class="relative w-full">
               <Input :is-error="error.includes('Email')" v-model="emailInput" size="lg" placeholder="Почта" />
@@ -71,7 +70,7 @@ const login = () => {
               </div>
             </div>
 
-          <PrimaryButton @click="login" text="Войти" >
+          <PrimaryButton custom-styles="w-full" @click="login" text="Войти" >
             <template v-if="processing" #spinner>
               <Spinner custom-class="text-gray-200 fill-purple-800" />
             </template>

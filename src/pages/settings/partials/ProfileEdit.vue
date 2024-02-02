@@ -11,7 +11,7 @@ const emailInput = ref('')
 
 const processing = ref(false);
 const DINAMOGRAPH_API_URL = import.meta.env.VITE_DINAMOGRAPH_API_URL
-const token = encryptStorage.getItem('token')
+const token = encryptStorage.getItem('at')
 
 const getUserDetails = () => {
 
@@ -20,7 +20,7 @@ const getUserDetails = () => {
   axios.get(`${DINAMOGRAPH_API_URL}/v1/user/me`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      "Authorization": `Bearer ${token}`
     },
   })
   .then(response => {

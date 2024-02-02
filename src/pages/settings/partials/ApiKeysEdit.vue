@@ -18,7 +18,7 @@ const error = ref('')
 const processing = ref(false);
 const loading = ref(false);
 const DINAMOGRAPH_API_URL = import.meta.env.VITE_DINAMOGRAPH_API_URL
-const token = encryptStorage.getItem('token')
+const token = encryptStorage.getItem('at')
 
 const getUserApiKeys = () => {
 
@@ -27,7 +27,7 @@ const getUserApiKeys = () => {
   axios.get(`${DINAMOGRAPH_API_URL}/v1/api-key/`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      "Authorization": `Bearer ${token}`
     },
   })
   .then(response => {
@@ -48,7 +48,7 @@ const createApiKey = () => {
   axios.post(`${DINAMOGRAPH_API_URL}/v1/api-key/`, {},{
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      "Authorization": `Bearer ${token}`
     },
   })
   .then(response => {
@@ -74,7 +74,7 @@ const deleteApiKey = (key_public_id) => {
   axios.delete(`${DINAMOGRAPH_API_URL}/v1/api-key/${key_public_id}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      "Authorization": `Bearer ${token}`
     },
   })
   .then(response => {

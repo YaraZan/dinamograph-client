@@ -34,7 +34,7 @@ const buttonSize = computed(() => {
 
 <template>
 <button
-  class="px-[12px] py-[4px] font-raleway font-bold border border-gray-300 cursor-pointer
+  class="px-[12px] py-[4px] font-raleway font-bold border border-gray-300 cursor-pointer outline-none
   text-gray-800 rounded-[10px] dark:text-white dark:border-stone-600 flex items-center justify-between
   hover:bg-gray-50 dark:hover:bg-opacity-60 shadow focus:border-primary active:bg-opacity-1
   bg-white dark:bg-gray-7 dark:focus:border-primary dark:active:bg-opacity-60 text-[16px]
