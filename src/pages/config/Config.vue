@@ -7,21 +7,27 @@ import AuthorizedLayout from "@/layouts/AuthorizedLayout.vue";
     <div class="fixed w-full flex items-center border-b border-gray-300 dark:border-stone-700 bg-white dark:bg-stone-800 z-10">
       <div class="w-2/3 mx-auto flex items-center">
         <router-link :to="{ name: 'config.versions' }"
+            :class="$route.name === 'config.versions' ?
+            'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
+            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
-            text-gray-400 dark:text-stone-600 hover:opacity-60 text-[16px] font-medium"
-            :class="{ 'border-b-2 border-primary text-primary dark:text-primary hover:opacity-100 font-semibold' : $route.name === 'config.versions' }">
+            text-[16px] font-medium">
           Версии
         </router-link>
         <router-link  :to="{ name: 'config.datasets' }"
-            :class="{ 'border-b-2 border-primary text-primary dark:text-primary hover:opacity-100 font-semibold' : $route.name === 'config.datasets' }"
+            :class="$route.name === 'config.datasets' ?
+            'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
+            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
-            text-gray-400 dark:text-stone-600 hover:opacity-60 text-[16px] font-medium">
+            text-[16px] font-medium">
           Датасеты
         </router-link>
         <router-link  :to="{ name: 'config.markers' }"
-            :class="{ 'border-b-2 border-primary text-primary dark:text-primary hover:opacity-100 font-semibold' : $route.name === 'config.markers' }"
+            :class="$route.name === 'config.markers' ?
+            'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
+            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
-            text-gray-400 dark:text-stone-600 hover:opacity-60 text-[16px] font-medium">
+            text-[16px] font-medium">
           Маркеры
         </router-link>
       </div>

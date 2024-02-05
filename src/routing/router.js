@@ -1,9 +1,9 @@
 import {Home, Login, Registration, Predict, Config, Settings} from "@/pages";
 import {createRouter, createWebHistory} from "vue-router";
 import {encryptStorage} from "@/utils/storage.js";
-import Versions from "@pages/config/Partials/Versions.vue";
-import Datasets from "@pages/config/Partials/Datasets.vue";
-import Markers from "@pages/config/Partials/Markers.vue";
+import Versions from "@pages/config/partials/Versions.vue";
+import Datasets from "@pages/config/partials/Datasets.vue";
+import Markers from "@pages/config/partials/Markers.vue";
 
 const routes = [
     { path: '/', name: 'home', component:  Home },
