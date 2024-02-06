@@ -42,7 +42,7 @@ const inputSize = computed(() => {
   }[props.size.toString()]
 })
 
-defineEmits(['updateValue']);
+defineEmits(['update:modelValue']);
 </script>
 
 <template>
@@ -53,7 +53,7 @@ defineEmits(['updateValue']);
     <input
         :disabled="isDisabled"
         :value="modelValue"
-        @input="$emit('updateValue', $event.target.value)"
+        @input="$emit('update:modelValue', $event.target.value)"
         :type="type"
         :placeholder="placeholder"
         class="bg-white dark:bg-stone-800 border border-gray-300 dark:border-stone-600 rounded-[10px]

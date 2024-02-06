@@ -9,6 +9,8 @@ import {PrimaryButton, Modal, Input} from "@components/ui/index.js";
 import ConfigVersionsSkeleton from "@components/ui/loading/skeleton/ConfigVersionsSkeleton.vue";
 import Range from "@components/ui/Range/Range.vue";
 import Spinner from "@components/ui/loading/spinner/Spinner.vue";
+import Edit from "@icons/outline/Edit.vue";
+import Delete from "@icons/outline/Delete.vue";
 
 const API_KEY = import.meta.env.VITE_API_KEY
 const DINAMOGRAPH_API_URL = import.meta.env.VITE_DINAMOGRAPH_API_URL
@@ -123,10 +125,6 @@ const handleUpdateAiModelRange = (value) => {
   newAiModel.value.epochs = value
 }
 
-const handleUpdateAiModelName = (value) => {
-  newAiModel.value.model_name = value
-}
-
 const closeModal = () => {
   openCreationModal.value = false;
 };
@@ -141,35 +139,48 @@ const closeModal = () => {
         <div class="flex items-center gap-[20px]">
           <h3 class="text-[38px] font-black text-gray-800 dark:text-white uppercase">Динамограф</h3>
           <span class="text-[32px] font-normal text-gray-400">{{ currentAiModel.name }}</span>
+          <div class="flex items-center gap-[10px]">
+            <Edit/>
+            <Delete/>
+          </div>
         </div>
 
-        <div class="mt-[20px] bg-gray-50 dark:bg-stone-900 flex flex-col gap-[20px] max-w-[600px] border border-gray-300 dark:border-stone-700 p-4 rounded-[20px]">
-          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-semibold mb-[20px]">Конфигурация</span>
+        <div class="w-full flex items-center justify-between">
+          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium">Доступ</span>
+          <div class="flex items-center bg-gray-100 rounded-[10px] p-1">
+            <div class="text-[14px] text-gray-800 font-semibold cursor-pointer w-1/2 flex p-2 bg-primary text-white rounded-[10px]">Приватный</div>
+            <div class="text-[14px] text-gray-400 font-semibold cursor-pointer w-1/2 flex p-2">Публичный</div>
+          </div>
+        </div>
 
-          <div class="flex justify-between">
+        <div class="flex flex-col max-w-[600px] rounded-[20px] border border-gray-300 dark:border-gray-6">
+
+          <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
             <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Кол-во эталонных динамограмм (Категорий)</span>
             <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.categories_num }}</span>
           </div>
 
-          <div class="flex justify-between">
+          <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
             <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Кол-во данных, использованных для обучения</span>
             <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.train_amount }}</span>
           </div>
 
-          <div class="flex justify-between">
+          <div class="w-full p-[12px] flex items-center justify-between">
             <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Дата создания</span>
             <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ new Date(currentAiModel.created_at).toLocaleDateString() }}</span>
           </div>
-
         </div>
 
-        <div class="bg-gray-50 dark:bg-stone-900 max-w-[600px] flex flex-col gap-[10px] p-4 border border-gray-300 dark:border-stone-700 rounded-[20px]">
-          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-semibold mb-[20px]">Данная версия может определять следующие неисправности в работе ШГН</span>
-          <div v-for="(marker, index) in currentAiModelMarkers" :key="index"
-               class="p-[5px] flex items-center gap-[20px]"
-          >
-            <img :src="`${DINAMOGRAPH_API_URL}/${marker.url}`" class="max-w-[80px] rounded-[10px]">
-            <span class="max-w-[400px] break-words text-gray-800 text-[18px] dark:text-white font-semibold">{{ marker.name.split('_').join(' ') }}</span>
+        <div class="max-w-[600px] flex flex-col gap-[10px] rounded-[20px]">
+          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium mb-[20px]">Данная версия может определять следующие неисправности в работе ШГН</span>
+          <div class="rounded-[20px] border border-gray-300 dark:border-gray-6">
+            <div v-for="(marker, index) in currentAiModelMarkers" :key="index"
+                 class="w-full p-[12px] flex items-center gap-[20px]"
+                 :class="{ 'border-b border-gray-300 dark:border-gray-6': index !== currentAiModelMarkers.length - 1 }"
+            >
+              <img :src="`${DINAMOGRAPH_API_URL}/${marker.url}`" class="max-w-[80px] rounded-[10px]">
+              <span class="max-w-[400px] break-words text-gray-800 text-[18px] dark:text-white font-semibold">{{ marker.name.split('_').join(' ') }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -200,7 +211,7 @@ const closeModal = () => {
         <Spinner v-if="processingCreateAiModel" class="absolute right-4 top-4"/>
         <div class="flex flex-col gap-4 w-full">
           <span class="text-[18px] font-semibold text-gray-500 dark:text-stone-400">Название модели</span>
-          <Input class="w-full" @update-value="handleUpdateAiModelName" :is-disabled="processingCreateAiModel" placeholder="Введите название" size="md" :model-value="newAiModel.model_name" />
+          <Input class="w-full" v-model="newAiModel.model_name" :is-disabled="processingCreateAiModel" placeholder="Введите название" size="md" />
         </div>
         <Range :is-disabled="processingCreateAiModel" @update-value="handleUpdateAiModelRange" :model-value="newAiModel.epochs">
           <template #label>

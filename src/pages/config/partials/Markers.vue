@@ -108,7 +108,7 @@ const closeModal = () => {
         <Spinner v-if="processingCreateMarker" class="absolute right-4 top-4"/>
         <div class="flex flex-col gap-4 w-full">
           <span class="text-[18px] font-semibold text-gray-500 dark:text-stone-400">Название маркера</span>
-          <Input class="w-full" @update-value="handleUpdateMarkerName" :is-disabled="processingCreateMarker" placeholder="Введите название" size="md" :model-value="newMarker.name" />
+          <Input class="w-full" v-model="newMarker.name" :is-disabled="processingCreateMarker" placeholder="Введите название" size="md" />
         </div>
         <div class="flex flex-col gap-4 w-full">
           <span class="text-[18px] font-semibold text-gray-500 dark:text-stone-400">Изображение</span>
