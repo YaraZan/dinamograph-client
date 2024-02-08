@@ -15,7 +15,7 @@ const processingLoadData = ref(false);
 const getAllDnms = () => {
   processingLoadData.value = true
 
-  axios.get(`${DINAMOGRAPH_API_URL}/v1/dnm/all`, {
+  return axios.get(`${DINAMOGRAPH_API_URL}/v1/dnm/all`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -32,6 +32,30 @@ const getAllDnms = () => {
   })
 }
 
+const deleteDnm = (dnm_id) => {
+  processingLoadData.value = true
+
+  return axios.delete(`${DINAMOGRAPH_API_URL}/v1/dnm/delete/${dnm_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+      .catch(error => {
+        processingLoadData.value = false;
+      })
+      .finally(() => {
+        processingLoadData.value = false;
+      })
+}
+
+const handleDeleteDnm = (dnm_id) => {
+  deleteDnm(dnm_id)
+  .then(() => {
+    getAllDnms()
+  })
+}
+
 onMounted(() => {
   getAllDnms()
 })
@@ -45,7 +69,7 @@ onMounted(() => {
       <h3 class="text-[38px] font-black text-gray-800 dark:text-white uppercase">Датасеты</h3>
     </div>
 
-    <div class="w-full grid grid-cols-5 gap-4 p-4">
+    <div v-if="!processingLoadData && dnms.length > 0" class="w-full grid grid-cols-5 gap-4 p-4">
       <div v-for="(dnm, index) in dnms"
            :key="index"
            class="flex flex-col shadow bg-white dark:bg-stone-900 rounded-[10px] p-4 gap-2">
@@ -56,9 +80,21 @@ onMounted(() => {
         <span v-else class="text-[16px] text-red-400 font-normal">Не выбрано</span>
         <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal mt-auto">{{ dnm.author }}</span>
         <div class="flex items-center self-end">
-          <Delete />
+          <Delete @click="handleDeleteDnm(dnm.id)" />
         </div>
       </div>
+    </div>
+
+    <div v-else-if="processingLoadData" class="w-full grid grid-cols-5 gap-[20px] p-4 animate-pulse">
+      <div v-for="(item, index) in Array.apply(null, Array(25)).map(function () {})"
+           :key="index"
+           class="flex flex-col bg-gray-100 dark:bg-stone-900 rounded-[10px] p-4 h-[200px]">
+      </div>
+    </div>
+
+    <div v-else class="p-4">
+      <span class="text-gray-400 dark:text-stone-400 font-semibold italic
+            text-[20px]">Данных нет</span>
     </div>
 
 

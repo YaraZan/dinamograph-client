@@ -22,6 +22,7 @@ const currentAiModelMarkers = ref([])
 
 const processingLoadData = ref(false)
 const processingCreateAiModel = ref(false)
+const processingUpdateAiModel = ref(false)
 
 const openCreationModal = ref(false)
 
@@ -32,12 +33,15 @@ const newAiModel = ref({
 
 onMounted(() => {
   getAllAiModels()
+  .then(() => {
+    handleSelectAiModel(aiModels.value[0].public_id)
+  })
 })
 
 const getAllAiModels = () => {
   processingLoadData.value = true
 
-  axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/all`, {
+  return axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/all`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -45,8 +49,6 @@ const getAllAiModels = () => {
   })
   .then(response => {
     aiModels.value = response.data.models;
-
-    handleSelectAiModel(aiModels.value[0].public_id)
   })
   .catch(error => {
     processingLoadData.value = false;
@@ -59,7 +61,7 @@ const getAllAiModels = () => {
 const getMarkersByAiModel = (model_public_id) => {
   processingLoadData.value = true
 
-  axios.get(`${DINAMOGRAPH_API_URL}/v1/marker/model/${model_public_id}`, {
+  return axios.get(`${DINAMOGRAPH_API_URL}/v1/marker/model/${model_public_id}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -76,10 +78,10 @@ const getMarkersByAiModel = (model_public_id) => {
   })
 }
 
-const handleSelectAiModel = (model_public_id) => {
+const getAiModel = (model_public_id) => {
   processingLoadData.value = true
 
-  axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/${model_public_id}`, {
+  return axios.get(`${DINAMOGRAPH_API_URL}/v1/ai/${model_public_id}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -87,7 +89,6 @@ const handleSelectAiModel = (model_public_id) => {
   })
   .then(response => {
     currentAiModel.value = response.data;
-    getMarkersByAiModel(currentAiModel.value.public_id)
   })
   .catch(error => {
     processingLoadData.value = false;
@@ -97,10 +98,10 @@ const handleSelectAiModel = (model_public_id) => {
   })
 }
 
-const handleCreateAiModel = () => {
+const createAiModel = () => {
   processingCreateAiModel.value = true
 
-  axios.post(`${DINAMOGRAPH_API_URL}/v1/ai/create`, {
+  return axios.post(`${DINAMOGRAPH_API_URL}/v1/ai/create`, {
     model_name: newAiModel.value.model_name,
     epochs: newAiModel.value.epochs,
   }, {
@@ -111,13 +112,86 @@ const handleCreateAiModel = () => {
   })
   .then(response => {
     openCreationModal.value = false;
-    getAllAiModels()
   })
   .catch(error => {
     processingCreateAiModel.value = false;
   })
   .finally(() => {
     processingCreateAiModel.value = false;
+  })
+}
+
+const updateAiModel = (isVisible) => {
+  processingUpdateAiModel.value = true
+
+  return axios.put(`${DINAMOGRAPH_API_URL}/v1/ai/update`, {
+    model_public_id: currentAiModel.value.public_id,
+    is_public: isVisible,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+  .catch(error => {
+    processingUpdateAiModel.value = false;
+  })
+  .finally(() => {
+    processingUpdateAiModel.value = false;
+  })
+}
+
+const deleteAiModel = () => {
+  processingUpdateAiModel.value = true
+
+  return axios.delete(`${DINAMOGRAPH_API_URL}/v1/ai/delete/${currentAiModel.value.public_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+  .catch(error => {
+    processingUpdateAiModel.value = false;
+  })
+  .finally(() => {
+    processingUpdateAiModel.value = false;
+  })
+}
+
+const handleUpdateAiModel = (isVisible) => {
+  updateAiModel(isVisible)
+  .then(() => {
+    getAllAiModels()
+      .then(() => {
+        handleSelectAiModel(currentAiModel.value.public_id)
+      })
+  })
+}
+
+const handleDeleteAiModel = () => {
+  deleteAiModel()
+      .then(() => {
+        getAllAiModels()
+            .then(() => {
+              handleSelectAiModel(aiModels.value[0].public_id)
+            })
+      })
+}
+
+const handleSelectAiModel = (model_public_id) => {
+  getAiModel(model_public_id)
+  .then(() => {
+    getMarkersByAiModel(currentAiModel.value.public_id)
+  })
+}
+
+const handleCreateAiModel = () => {
+  createAiModel()
+  .then(() => {
+    getAllAiModels()
+      .then(() => {
+        handleSelectAiModel(aiModels.value[0].public_id)
+      })
   })
 }
 
@@ -128,6 +202,7 @@ const handleUpdateAiModelRange = (value) => {
 const closeModal = () => {
   openCreationModal.value = false;
 };
+
 </script>
 
 <template>
@@ -135,44 +210,46 @@ const closeModal = () => {
 
     <div v-if="!processingLoadData" class="w-full justify-between flex p-4">
 
-      <div class="flex flex-col gap-[20px]">
+      <div v-if="!processingLoadData && aiModels.length > 0" class="flex flex-col gap-[40px]">
+
         <div class="flex items-center gap-[20px]">
           <h3 class="text-[38px] font-black text-gray-800 dark:text-white uppercase">Динамограф</h3>
-          <span class="text-[32px] font-normal text-gray-400">{{ currentAiModel.name }}</span>
-          <div class="flex items-center gap-[10px]">
-            <Edit/>
-            <Delete/>
+          <span class="text-[24px] font-normal text-gray-400">{{ currentAiModel.name }}</span>
+          <Delete @click="handleDeleteAiModel" />
+        </div>
+
+        <div class="flex flex-col gap-[20px]">
+          <div class="w-full flex items-center gap-[50px]">
+            <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium">Доступ</span>
+            <div @click="handleUpdateAiModel(!currentAiModel.is_public)" class="flex items-center bg-gray-100 dark:bg-stone-900 rounded-[10px] gap-1 p-1">
+              <div :class="{ 'bg-primary text-white dark:text-white' : !currentAiModel.is_public  }" class="transition-all text-[14px] text-gray-400 font-semibold
+            cursor-pointer w-1/2 flex p-2 rounded-[10px] dark:text-stone-400">Приватный</div>
+              <div :class="{ 'bg-primary text-white dark:text-white'  : currentAiModel.is_public  }" class="transition-all text-[14px] text-gray-400 font-semibold
+            cursor-pointer w-1/2 flex p-2 rounded-[10px] dark:text-stone-400">Публичный</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col max-w-[600px] rounded-[20px] border border-gray-300 dark:border-gray-6">
+
+            <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
+              <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Эталонных динамограмм</span>
+              <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.categories_num }}</span>
+            </div>
+
+            <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
+              <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Размер датасета</span>
+              <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.train_amount }}</span>
+            </div>
+
+            <div class="w-full p-[12px] flex items-center justify-between">
+              <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Дата создания</span>
+              <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ new Date(currentAiModel.created_at).toLocaleDateString() }}</span>
+            </div>
           </div>
         </div>
 
-        <div class="w-full flex items-center justify-between">
-          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium">Доступ</span>
-          <div class="flex items-center bg-gray-100 rounded-[10px] p-1">
-            <div class="text-[14px] text-gray-800 font-semibold cursor-pointer w-1/2 flex p-2 bg-primary text-white rounded-[10px]">Приватный</div>
-            <div class="text-[14px] text-gray-400 font-semibold cursor-pointer w-1/2 flex p-2">Публичный</div>
-          </div>
-        </div>
-
-        <div class="flex flex-col max-w-[600px] rounded-[20px] border border-gray-300 dark:border-gray-6">
-
-          <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
-            <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Кол-во эталонных динамограмм (Категорий)</span>
-            <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.categories_num }}</span>
-          </div>
-
-          <div class="w-full p-[12px] flex items-center justify-between border-b border-gray-300 dark:border-gray-6">
-            <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Кол-во данных, использованных для обучения</span>
-            <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ currentAiModel.train_amount }}</span>
-          </div>
-
-          <div class="w-full p-[12px] flex items-center justify-between">
-            <span class="text-[16px] text-gray-400 dark:text-stone-400 font-normal">Дата создания</span>
-            <span class="text-[16px] text-gray-800 dark:text-white font-medium">{{ new Date(currentAiModel.created_at).toLocaleDateString() }}</span>
-          </div>
-        </div>
-
-        <div class="max-w-[600px] flex flex-col gap-[10px] rounded-[20px]">
-          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium mb-[20px]">Данная версия может определять следующие неисправности в работе ШГН</span>
+        <div class="max-w-[600px] flex flex-col gap-[20px] rounded-[20px]">
+          <span class="text-[16px] text-gray-400 dark:text-stone-400 font-medium">Распознаваемые неисправности в работе ШГН</span>
           <div class="rounded-[20px] border border-gray-300 dark:border-gray-6">
             <div v-for="(marker, index) in currentAiModelMarkers" :key="index"
                  class="w-full p-[12px] flex items-center gap-[20px]"
@@ -185,9 +262,14 @@ const closeModal = () => {
         </div>
       </div>
 
+      <div v-else class="p-4">
+        <span class="text-gray-400 dark:text-stone-400 font-semibold italic
+              text-[20px]">Данных нет</span>
+      </div>
+
       <div class="flex flex-col gap-[30px]">
         <div class="flex items-center gap-[10px]">
-          <SingleDropdown text="Версия">
+          <SingleDropdown v-if="aiModels.length > 0" text="Версия">
             <template #content>
               <div v-for="(aiModel, index) in aiModels" :key="index"
                    @click="handleSelectAiModel(aiModel.public_id)"

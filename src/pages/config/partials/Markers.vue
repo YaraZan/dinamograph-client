@@ -66,6 +66,30 @@ const createNewMarker = () => {
   })
 }
 
+const deleteMarker = (marker_id) => {
+  processingLoadData.value = true
+
+  return axios.delete(`${DINAMOGRAPH_API_URL}/v1/marker/delete/${marker_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+  .catch(error => {
+    processingLoadData.value = false;
+  })
+  .finally(() => {
+    processingLoadData.value = false;
+  })
+}
+
+const handleDeleteMarker = (marker_id) => {
+  deleteMarker(marker_id)
+      .then(() => {
+        getAllMarkers()
+      })
+}
+
 onMounted(() => {
   getAllMarkers()
 })
@@ -91,16 +115,28 @@ const closeModal = () => {
       <PrimaryButton @click="openCreationModal = !openCreationModal" :is-disabled="processingLoadData" size="xs" text="Новый"/>
     </div>
 
-    <div class="w-full grid grid-cols-5 gap-[20px] p-4">
+    <div v-if="!processingLoadData && markers.length > 0" class="w-full grid grid-cols-5 gap-[20px] p-4">
       <div v-for="(marker, index) in markers"
            :key="index"
            class="flex flex-col shadow bg-white dark:bg-stone-900 rounded-[10px] p-4">
         <img :src="`${DINAMOGRAPH_API_URL}/${marker.url}`" class="w-full rounded-[10px]">
         <span class="h-full break-words font-medium p-2 text-[15px] text-gray-800 dark:text-white">{{ marker.name.split('_').join(' ') }}</span>
         <div class="flex items-center self-end">
-          <Delete />
+          <Delete @click="handleDeleteMarker(marker.id)" />
         </div>
       </div>
+    </div>
+
+    <div v-else-if="processingLoadData" class="w-full grid grid-cols-5 gap-[20px] p-4 animate-pulse">
+      <div v-for="(item, index) in Array.apply(null, Array(25)).map(function () {})"
+           :key="index"
+           class="flex flex-col bg-gray-100 dark:bg-stone-900 rounded-[10px] p-4 h-[200px]">
+      </div>
+    </div>
+
+    <div v-else class="p-4">
+      <span class="text-gray-400 dark:text-stone-400 font-semibold italic
+            text-[20px]">Данных нет</span>
     </div>
 
     <Modal :show="openCreationModal" @close="closeModal">

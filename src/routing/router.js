@@ -26,8 +26,18 @@ const routes = [
                 path: 'markers',
                 name: 'config.markers',
                 component: Markers
-            }
+            },
         ],
+        beforeEnter: (to, from, next) => {
+            const ud = encryptStorage.getItem('ud');
+            if (ud.role !== 'admin' ) next({ name: from.name })
+
+            if (to.name === 'config') {
+                next({ name : 'config.versions'});
+            } else {
+                next();
+            }
+        },
         meta: { requiresAuth: true } },
     { path: '/settings', name: 'settings', component:  Settings, meta: { requiresAuth: true } }
 ]
@@ -37,9 +47,16 @@ const router = createRouter({
     history: createWebHistory(),
 })
 
+const isAuthorized = () => {
+    const ud = encryptStorage.getItem('ud');
+    const at = encryptStorage.getItem('at');
+
+    return ud !== undefined && ud.role !== undefined && at !== undefined
+}
+
 router.beforeEach((to, from, next) => {
-    if (to.name === 'config') {
-        next({ name : 'config.versions'});
+    if (!isAuthorized() && to.name !== 'login') {
+        next({ name: 'login' });
     } else {
         next();
     }

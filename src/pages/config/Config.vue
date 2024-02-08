@@ -9,7 +9,7 @@ import AuthorizedLayout from "@/layouts/AuthorizedLayout.vue";
         <router-link :to="{ name: 'config.versions' }"
             :class="$route.name === 'config.versions' ?
             'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
-            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
+            'text-gray-400 dark:text-stone-500 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
             text-[16px] font-medium">
           Версии
@@ -17,7 +17,7 @@ import AuthorizedLayout from "@/layouts/AuthorizedLayout.vue";
         <router-link  :to="{ name: 'config.datasets' }"
             :class="$route.name === 'config.datasets' ?
             'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
-            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
+            'text-gray-400 dark:text-stone-500 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
             text-[16px] font-medium">
           Датасеты
@@ -25,7 +25,7 @@ import AuthorizedLayout from "@/layouts/AuthorizedLayout.vue";
         <router-link  :to="{ name: 'config.markers' }"
             :class="$route.name === 'config.markers' ?
             'border-b-2 border-primary text-primary dark:text-primary opacity-100 font-semibold' :
-            'text-gray-400 dark:text-stone-600 opacity-60 hover:opacity-100'"
+            'text-gray-400 dark:text-stone-500 opacity-60 hover:opacity-100'"
             class="flex items-center justify-center p-4 cursor-pointer
             text-[16px] font-medium">
           Маркеры

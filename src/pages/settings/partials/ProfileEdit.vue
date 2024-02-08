@@ -39,9 +39,10 @@ const getUserDetails = () => {
 }
 
 const logout = () => {
-  encryptStorage.removeItem('token')
+  encryptStorage.removeItem('at')
+  encryptStorage.removeItem('ud')
 
-  router.push('/')
+  router.push({ name : 'home' })
 }
 
 onMounted(() => {
