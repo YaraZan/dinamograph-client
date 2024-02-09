@@ -1,7 +1,44 @@
-# Vue 3 + Vite
+![Logo](public/readme_logo.png)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Динамограф
+Клиентское приложение для обслуживания [**Динамограф AI**](https://github.com/YaraZan/dinamograph-api).
+Упрощает процесс манипуляций с датасетами, маркерами, а также состоянием и настройками моделей машинного обучения.
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=plastic&logo=vuedotjs&logoColor=%234FC08D)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=plastic&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=plastic&logo=vite&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=plastic&logo=postgresql&logoColor=white)
+
+## Функционал
+
+- [x] **Создание новых моделей:**
+
+  Создание модели, обучение на текущих датасетах с возможностью настройки (например, `эпохи`).
+
+- [x] **Тестирование**
+
+  Новые, а также созданные ранее модели, могут быть сразу же протестированы.
+
+- [x] **Создание новых маркеров**
+
+  Возможность пополнять список маркеров для совершенствования модели
+
+- [x] **Персонализация**
+
+  Возможность менять цветовую тему приложения 🌙
+
+
+## Стек технологий
+**Client:** Vue, Vite, TailwindCSS
+
+**Server:** Laravel
+
+**Database:** PostgreSQL
+
+## Производство
+
+Проект нашёл своё применение в компании [ПАО "Татнефть"](https://www.tatneft.ru/)
+
+
